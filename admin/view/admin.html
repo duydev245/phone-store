@@ -19,11 +19,32 @@
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v6.1.1/css/all.css"
     />
+
+    <!-- toastify-js -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+
     <link rel="stylesheet" href="./css/modal.css" />
     <link rel="stylesheet" href="./css/style.css" />
+
+    <style>
+      #loading {
+        background: rgba(128, 128, 128, 0.5);
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+      }
+    </style>
   </head>
 
   <body>
+    <div id="loading"></div>
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark black fixed-top mb-5">
         <div class="container">
@@ -284,8 +305,8 @@
                       </div>
                       <select class="form-control" name="chucvu" id="type">
                         <option selected disabled>Select brand</option>
-                        <option>Apple</option>
-                        <option>Samsung</option>
+                        <option value="Iphone">Apple</option>
+                        <option value="Samsung">Samsung</option>
                       </select>
                     </div>
 
@@ -296,10 +317,10 @@
 
               <!-- Modal footer -->
               <div class="modal-footer" id="modal-footer">
-                <button type="button" class="btn" id="btnAddPhone">
+                <button type="button" class="btn" id="btnAddPhone" onclick="createProduct()">
                   Add Phone
                 </button>
-                <button id="btnUpdate" type="button" class="btn">
+                <button id="btnUpdate" type="button" class="btn" onclick="updateProduct()">
                   Update Phone
                 </button>
                 <button
@@ -451,6 +472,11 @@
       referrerpolicy="no-referrer"
     ></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- toastify-js -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="module" src="../controller/main.js"></script>
   </body>
