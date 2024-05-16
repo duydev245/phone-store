@@ -2,7 +2,9 @@ import { Phone } from "../model/phone.js";
 
 export let resetForm = () => {
     document.getElementById('formPhone').reset();
-    document.getElementById('btnAddPhone').disabled = false;
+    // reset btn
+    document.getElementById('btnUpdate').style.display = 'none';
+    document.getElementById('btnAddPhone').style.display = 'inline-block';
 }
 
 export let turnOnLoading = () => {

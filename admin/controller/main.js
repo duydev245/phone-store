@@ -1,8 +1,10 @@
 import { productService } from "../services/phoneService.js"
 import { getDataForm, renderProduct, resetForm, showDataForm, showMessage, turnOffLoading, turnOnLoading } from "./controller.js";
+import { Validate } from "./validate.js";
 
 const dataFail = false;
 let productEditId = 0;
+const validate = new Validate();
 
 let fetchProduct = () => {
     // on loading
@@ -23,7 +25,20 @@ let fetchProduct = () => {
 
 fetchProduct()
 
+document.getElementById('addPhoneForm').addEventListener('click', () => {
+    // reset form into default
+    resetForm();
+})
+
 window.createProduct = () => {
+    // Check Validate
+    // productService.getList().then(res)=>{
+        
+    // };
+    console.log("🚀 ~ phoneList:", phoneList)
+    if(!validate.isValid(phoneList))
+        return;
+
     let newProduct = getDataForm();
     turnOnLoading();
     // Turn off modal
@@ -68,7 +83,8 @@ window.editProduct = (id) => {
     // Turn on modal
     $('#exampleModal').modal('show');
     // disable btnAddPhone
-    document.getElementById('btnAddPhone').disabled = true;
+    document.getElementById('btnUpdate').style.display = 'inline-block';
+    document.getElementById('btnAddPhone').style.display = 'none';
     productService
         .getDetail(id)
         .then((res) => {
