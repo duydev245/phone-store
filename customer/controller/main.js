@@ -145,3 +145,9 @@ function handleSelection() {
         fetchProduct()
     }
 }
+
+window.addEventListener('load', () => {
+    renderProductsToTable();
+    totalMoney();
+    calculatorTotal();
+});
