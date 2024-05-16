@@ -21,9 +21,9 @@ function renderProduct(arr) {
 }
 // Cart page
 function renderProductsToTable () {
-    let data = ``;
+    let data = "";
     productInCart.forEach((value, index) => {
-      data += `
+      let trString = `
       <tr>
         <td>${value.name}</td>
         <td>${value.price}</td>
@@ -36,6 +36,7 @@ function renderProductsToTable () {
         <td><button onclick='deleteProductInCart(${index})' class='btn btn-danger'>Delete</button></td>
       </tr>
       `;
+      data += trString
     });
     document.getElementById('cartList').innerHTML = data;
   }
