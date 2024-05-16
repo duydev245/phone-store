@@ -32,12 +32,12 @@ document.getElementById('addPhoneForm').addEventListener('click', () => {
 
 window.createProduct = () => {
     // Check Validate
-    // productService.getList().then(res)=>{
-        
-    // };
-    console.log("🚀 ~ phoneList:", phoneList)
-    if(!validate.isValid(phoneList))
-        return;
+    productService.getList().then((res) => {
+        console.log("🚀 ~ productService.getList ~ res:", res.data)
+        if (!validate.isValid(res.data))
+            return;
+    });
+
 
     let newProduct = getDataForm();
     turnOnLoading();
