@@ -142,13 +142,14 @@
                 class="form-select w-25 mb-5"
                 id="selectList"
                 aria-label="Default select example"
+                onchange="handleSelection()"
               >
                 <option value="all">All Brands</option>
                 <option value="Iphone">Apple</option>
                 <option value="Samsung">Samsung</option>
               </select>
             </div>
-            <div class="row mx-0 gy-4" id="phoneList"></div>
+            <div class="row mx-0" id="phoneList"></div>
           </div>
         </div>
       </main>
@@ -160,7 +161,22 @@
           <div class="cart__products">
             <h2>Shopping Cart</h2>
             <p class="microcopy">An overview of your selected products.</p>
-            <div class="products" id="cartList"></div>
+            <div class="products row">
+              <div class="col-12 my-5">
+                <table class="table align-middle">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cartList"></tbody>
+                </table>
+              </div>
+            </div>
           </div>
           <div class="cart__totals">
             <table class="totals">
@@ -346,7 +362,13 @@
     ></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- axios -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"
+      integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script>
       // toggle shopping cart
       $(".js-toggle-cart, .cart__overlay").on("click", function () {
@@ -361,6 +383,7 @@
         }
       });
     </script>
-    <script type="module" src="../controller/main.js"></script>
+    <script src="../controller/controller.js"></script>
+    <script src="../controller/main.js"></script>
   </body>
 </html>

@@ -12,3 +12,4 @@ export class Product {
         this.type = type;
     }
 }
+
