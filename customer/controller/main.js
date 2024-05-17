@@ -119,12 +119,16 @@ function emptyCart(){
 }
 
 function payNow(){
-    productInCart.length = 0
-    alert("Successfully paid")
-    saveToLocalStorage()
-    renderProductsToTable()
-    totalMoney()
-    calculatorTotal()
+    if(productInCart.length > 0){
+        productInCart.length = 0
+        alert("Successfully paid")
+        saveToLocalStorage()
+        renderProductsToTable()
+        totalMoney()
+        calculatorTotal()
+    } else {
+        alert("Please add products to cart")
+    }
 }
 
 function renderSamsungProducts() {
