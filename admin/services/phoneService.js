@@ -3,7 +3,8 @@ const BASE_URL = 'https://664207a93d66a67b3435e34a.mockapi.io/products';
 export var productService = {
 
     getList: function () {
-        return axios.get(BASE_URL);
+        return axios.get(BASE_URL)
+            .then(response => response.data);
     },
 
     getDetail: function (id) {
