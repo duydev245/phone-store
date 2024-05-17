@@ -142,16 +142,20 @@ window.updateProduct = () => {
 
 }
 
-window.searchSP = () => {
+let isAscending = true;
+
+window.searchProduct = () => {
     const searchName = document.getElementById('searchName').value.trim().toLowerCase();
 
-    // Fetch the list of products
-    productService.getList()
+    productService
+        .getList()
         .then(products => {
-            // Filter products based on search input
             const filteredProducts = products.filter(product =>
                 product.name.toLowerCase().includes(searchName)
             );
+
+            // Sort a filteredProducts (Sort first then search)
+            filteredProducts.sort((a, b) => isAscending ? a.price - b.price : b.price - a.price);
 
             // Render the filtered products
             renderProduct(filteredProducts);
@@ -160,3 +164,26 @@ window.searchSP = () => {
             console.error('Error fetching profduct list:', error);
         });
 }
+
+// Sort products by price and change sort order
+window.sortProduct = () => {
+    productService
+        .getList()
+        .then(products => {
+            products.sort((a, b) => isAscending ? a.price - b.price : b.price - a.price);
+
+            renderProduct(products);
+
+            // Change ascending -> descending
+            isAscending = !isAscending;
+
+            // Change the button's inner HTML
+            document.getElementById('sortButton').innerHTML = isAscending
+                ? '<i class="fa fa-arrow-circle-down"></i> Sort Phone'
+                : '<i class="fa fa-arrow-circle-up"></i> Sort Phone';
+        })
+        .catch(error => {
+            console.error('Error fetching product list:', error);
+        });
+};
+
