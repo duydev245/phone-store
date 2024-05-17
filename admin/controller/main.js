@@ -106,25 +106,57 @@ window.editProduct = (id) => {
 }
 
 window.updateProduct = () => {
-    let newPhone = getDataForm();
-    // On Loading
-    turnOnLoading();
-    // Turn off modal
-    $('#exampleModal').modal('hide');
-    productService
-        .update(productEditId, newPhone)
-        .then((res) => {
-            console.log("🚀 ~ .then ~ res:", res);
-            // fetchProduct
-            fetchProduct();
-            // reset form
-            resetForm();
-            // Show message
-            showMessage('Succes!!!');
-        }).catch((err) => {
-            turnOffLoading();
-            console.log("🚀 ~ .then ~ err:", err);
-            // Show message
-            showMessage('Fail!!!', dataFail);
+    productService.getList().then(phoneList => {
+        // Check Validate
+        if (!validate.isValid(phoneList, true)) {
+            return;
+        }
+
+        let newPhone = getDataForm();
+        // On Loading
+        turnOnLoading();
+        // Turn off modal
+        $('#exampleModal').modal('hide');
+        productService
+            .update(productEditId, newPhone)
+            .then((res) => {
+                console.log("🚀 ~ .then ~ res:", res);
+                // fetchProduct
+                fetchProduct();
+                // reset form
+                resetForm();
+                // Show message
+                showMessage('Succes!!!');
+            }).catch((err) => {
+                turnOffLoading();
+                console.log("🚀 ~ .then ~ err:", err);
+                // Show message
+                showMessage('Fail!!!', dataFail);
+            });
+
+    }).catch(err => {
+        console.log("🚀 ~ productService.getList ~ err:", err);
+        // Handle the error when fetching the product list
+        showMessage('Failed to fetch product list!!!', err);
+    });
+
+}
+
+window.searchSP = () => {
+    const searchName = document.getElementById('searchName').value.trim().toLowerCase();
+
+    // Fetch the list of products
+    productService.getList()
+        .then(products => {
+            // Filter products based on search input
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(searchName)
+            );
+
+            // Render the filtered products
+            renderProduct(filteredProducts);
+        })
+        .catch(error => {
+            console.error('Error fetching profduct list:', error);
         });
 }
