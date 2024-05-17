@@ -28,17 +28,17 @@ export class Validate {
       : this.messageSwitch(true, idTB);
   }
 
-  isMatch(id, idTB, format) {
+  isMatch(id, idTB, format, message) {
     let text = getEle(id).value;
     return !format.test(text)
-      ? this.messageSwitch(false, idTB, '(*)Price must be a number')
+      ? this.messageSwitch(false, idTB, message)
       : this.messageSwitch(true, idTB);
   }
 
   isNotExist(phoneList, isUpdate = false) {
     if (isUpdate) return this.messageSwitch(true, 'tbname');
     for (let i = 0; i < phoneList.length; i++) {
-      if (phoneList[i].name == getEle('name').value) {
+      if (getEle('name').value == phoneList[i].name) {
         return this.messageSwitch(false, 'tbname', '(*)This phone already exist');
       }
     }
@@ -50,7 +50,7 @@ export class Validate {
     valid &= this.isNotEmpty('name', 'tbname') && this.isNotExist(phoneList, isUpdate);
     valid &=
       this.isNotEmpty('price', 'tbprice') &&
-      this.isMatch('price', 'tbprice', this.numRegex);
+      this.isMatch('price', 'tbprice', this.numRegex, '(*)Price must be a number');
 
     valid &= this.isNotEmpty('screen', 'tbscreen');
     valid &= this.isNotEmpty('backCam', 'tbbackCam');

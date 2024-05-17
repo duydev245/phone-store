@@ -16,7 +16,7 @@ let fetchProduct = () => {
             turnOffLoading();
             console.log("🚀 ~ service.getList ~ res:", res)
             // renderProduct
-            renderProduct(res.data);
+            renderProduct(res);
         })
         .catch((err) => {
             console.log("🚀 ~ service.getList ~ err:", err)
@@ -31,34 +31,38 @@ document.getElementById('addPhoneForm').addEventListener('click', () => {
 })
 
 window.createProduct = () => {
-    // Check Validate
-    productService.getList().then((res) => {
-        console.log("🚀 ~ productService.getList ~ res:", res.data)
-        if (!validate.isValid(res.data))
+    productService.getList().then(phoneList => {
+        // Check Validate
+        if (!validate.isValid(phoneList)) {
             return;
+        }
+
+        let newProduct = getDataForm();
+        turnOnLoading();
+        // Turn off modal
+        $('#exampleModal').modal('hide');
+        productService.create(newProduct)
+            .then((res) => {
+                console.log("🚀 ~ .then ~ res:", res);
+                // Call fetchProduct again
+                fetchProduct();
+                // Reset form
+                resetForm();
+                // Show success message
+                showMessage('Success!!!');
+            }).catch((err) => {
+                console.log("🚀 ~ .then ~ err:", err);
+                // Show failure message
+                showMessage('Fail!!!', err);
+            }).finally(() => {
+                // Turn off loading indicator
+                turnOffLoading();
+            });
+    }).catch(err => {
+        console.log("🚀 ~ productService.getList ~ err:", err);
+        // Handle the error when fetching the product list
+        showMessage('Failed to fetch product list!!!', err);
     });
-
-
-    let newProduct = getDataForm();
-    turnOnLoading();
-    // Turn off modal
-    $('#exampleModal').modal('hide');
-    productService
-        .create(newProduct)
-        .then((res) => {
-            console.log("🚀 ~ .then ~ res:", res);
-            // call fetchProduct again
-            fetchProduct();
-            // reset form
-            resetForm();
-            // Show message
-            showMessage('Succes!!!');
-        }).catch((err) => {
-            turnOffLoading();
-            console.log("🚀 ~ .then ~ err:", err);
-            // Show message
-            showMessage('Fail!!!', dataFail);
-        });
 }
 
 window.removeProduct = (id) => {
